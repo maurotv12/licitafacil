@@ -99,6 +99,7 @@ class UsuariosComponent extends Component
         $user->name = $validated['name'];
         $user->apellido = $validated['apellido'];
         $user->telefono = $validated['telefono'];
+        $user->email = $validated['email'];
         $user->id_rol = $validated['id_rol'];
 
         if ($user->email !== $this->editionUser->email) {
