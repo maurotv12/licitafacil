@@ -22,6 +22,8 @@ return new class extends Migration
             $table->foreign('id_estado')->references('id')->on('estados');
             $table->foreign('id_cliente')->references('id')->on('clientes');
             $table->timestamps();
+            $table->date('fecha_inicio')->nullable();
+            $table->date('fecha_fin')->nullable();
         });
     }
 

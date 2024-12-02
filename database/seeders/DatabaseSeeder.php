@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             RolSeeder::class,
             TipoTrazabilidadSeeder::class,
             TipoArchivoSeeder::class,
+            UserSeeder::class,
         ]);
 
         // Estado::factory(3)->create();

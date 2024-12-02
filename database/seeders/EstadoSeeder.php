@@ -24,5 +24,8 @@ class EstadoSeeder extends Seeder
         $estadoProceso = new Estado();
         $estadoProceso->descripcion = 'En proceso';
         $estadoProceso->save();
+
+        $estadoProceso->descripcion = 'Aprobado';
+        $estadoProceso->save();
     }
 }

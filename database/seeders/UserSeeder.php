@@ -18,11 +18,13 @@ class UserSeeder extends Seeder
         $user = new User();
         $user->name = 'Mauricio';
         $user->apellido = 'Muñoz';
-        $user->cedula = '11222333';
-        $user->telefono = '1234567';
+        $user->cedula = '1144212220';
+        $user->telefono = '3135529157';
         $user->id_rol = '1';
-        $user->email = 'mauricio@gmail.com';
-        $user->password = Hash::make('password');
+        $user->id_estado = '1';
+        $user->fecha_nacimiento = '1999-05-12';
+        $user->email = 'm-mau55@hotmail.com';
+        $user->password = Hash::make('123456');
         $user->save();
     }
 }

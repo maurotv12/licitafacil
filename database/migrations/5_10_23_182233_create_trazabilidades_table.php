@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('trazabilidades', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion');
+            $table->longText('descripcion');
             $table->unsignedBigInteger('id_archivo')->nullable()->index();
             $table->unsignedBigInteger('id_licitacion')->nullable()->index();
             $table->unsignedBigInteger('id_tipo_trazabilidad')->nullable()->index();

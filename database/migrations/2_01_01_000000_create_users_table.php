@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('apellido');
             $table->string('cedula');
+            $table->date('fecha_nacimiento');
             $table->string('telefono');
             $table->unsignedBigInteger('id_rol')->nullable()->index();
             $table->foreign('id_rol')->references('id')->on('roles');
