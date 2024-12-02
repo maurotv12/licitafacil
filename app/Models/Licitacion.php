@@ -23,6 +23,8 @@ class Licitacion extends Model
         'id_usuario',
         'id_cliente',
         'id_estado',
+        'fecha_inicio',
+        'fecha_fin',
     ];
 
     /**

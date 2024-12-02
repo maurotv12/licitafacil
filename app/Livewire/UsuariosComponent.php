@@ -19,6 +19,7 @@ class UsuariosComponent extends Component
     public string $telefono = '';
     public string $id_rol = '';
     public string $email = '';
+    public string $fecha_nacimiento = '';
     public string $password = '';
     public string $password_confirmation = '';
     public $roles = [];
@@ -60,6 +61,7 @@ class UsuariosComponent extends Component
             'name' => ['required', 'string', 'max:255'],
             'apellido' => ['required', 'string', 'max:255'],
             'telefono' => ['required', 'string', 'max:10'],
+            'fecha_nacimiento' => ['required', 'string'],
             'id_rol' => ['required'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
@@ -86,6 +88,7 @@ class UsuariosComponent extends Component
             'name' => ['required', 'string', 'max:255'],
             'apellido' => ['required', 'string', 'max:255'],
             'telefono' => ['required', 'string', 'max:10'],
+            'fecha_nacimiento' => ['required', 'string'],
             'id_rol' => ['required'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
             'password' => ['string', 'confirmed', Rules\Password::defaults()],
@@ -99,6 +102,7 @@ class UsuariosComponent extends Component
         $user->name = $validated['name'];
         $user->apellido = $validated['apellido'];
         $user->telefono = $validated['telefono'];
+        $user->fecha_nacimiento = $validated['fecha_nacimiento'];
         $user->email = $validated['email'];
         $user->id_rol = $validated['id_rol'];
 
@@ -134,6 +138,7 @@ class UsuariosComponent extends Component
         $this->name = $this->editionUser->name;
         $this->apellido = $this->editionUser->apellido;
         $this->telefono = $this->editionUser->telefono;
+        $this->fecha_nacimiento = $this->editionUser->fecha_nacimiento;
         $this->id_rol = $this->editionUser->id_rol;
         $this->email = $this->editionUser->email;
     }
@@ -149,6 +154,7 @@ class UsuariosComponent extends Component
         $this->apellido = '';
         $this->telefono = '';
         $this->id_rol = '';
+        $this->fecha_nacimiento = '';
         $this->email = '';
         $this->password = '';
         $this->password_confirmation = '';

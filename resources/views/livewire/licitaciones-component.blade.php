@@ -7,35 +7,50 @@
             Crear
         </button>
         <div class="items-center justify-between">
-            @if ($user->id_rol === 1)
-                <div class="bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded-md inline-flex dark:bg-gray-400 dark:border-gray-700 h-10">
-                    <button wire:click="filtrarLicitacionesUsuario" class="inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-grey-400 focus:text-grey-400 rounded-l-full px-4 py-2 {{!$showAll ? 'active' : ''}}" id="grid">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fill-current w-4 h-4 mr-2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                        <span>Mias</span>
-                    </button>
-                    <button wire:click="filtrarLicitacionesUsuario" class="inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-grey-400 focus:text-grey-400 rounded-r-full px-4 py-2 {{$showAll ? 'active' : ''}}" id="list">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fill-current w-4 h-4 mr-2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                        <span>Todas</span>
-                    </button>
+            <div class="flex items-center justify-between gap-2">
+                @if ($user->id_rol === 1)
+                    <div class=" mb-2 bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded-md inline-flex dark:bg-gray-400 dark:border-gray-700 h-10">
+                        <button wire:click="filtrarLicitacionesUsuario" class="inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-grey-400 focus:text-grey-400 rounded-l-full px-4 py-2 {{!$showAll ? 'active' : ''}}" id="grid">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fill-current w-4 h-4 mr-2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                            <span>Mias</span>
+                        </button>
+                        <button wire:click="filtrarLicitacionesUsuario" class="inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-grey-400 focus:text-grey-400 rounded-r-full px-4 py-2 {{$showAll ? 'active' : ''}}" id="list">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fill-current w-4 h-4 mr-2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                            <span>Todas</span>
+                        </button>
+                    </div>
+                    <div class="inline-flex justify-center content-center items-center gap-3 mb-2">
+                        <label for="usuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Usuario:</label>
+                        <select wire:model="usuario" wire:change='getLicitaciones' id="usuario" name="usuario" class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                            <option value="">Todos</option>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}">{{$user->name}} {{$user->apellido}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+                <style>
+                    .active {background: white; border-radius: 5px; color: #black;}
+                </style>
+                <div class="inline-flex justify-center content-center items-center gap-3 mb-2">
+                    <label for="orden" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Orden:</label>
+                    <select wire:model="orden" wire:change='getLicitaciones' id="orden" name="orden" class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <option value="nombre">Nombre</option>
+                        <option value="fecha_inicio">Fecha Inicio</option>
+                        <option value="fecha_fin">Fecha Fin</option>
+                        <option value="id_estado">Estado</option>
+                        <option value="id_cliente">Cliente</option>
+                        <option value="id_usuario">Usuario</option>
+                    </select>
                 </div>
-            @endif
-            <style>
-                .active {background: white; border-radius: 5px; color: #black;}
-              </style>
-            <div class="inline-flex justify-center content-center items-center gap-3 mb-2">
-                <label for="orden" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Orden:</label>
-                <select wire:model="orden" wire:change='getLicitaciones' id="orden" name="orden" class="w-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                    <option value="nombre">Nombre</option>
-                    <option value="id_estado">Estado</option>
-                    <option value="id_cliente">Cliente</option>
-                    <option value="id_usuario">Usuario</option>
-                </select>
+
             </div>
+
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none">
                     <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                 </div>
-                <input wire:keyup="getLicitaciones" wire:model="texto" type="text" id="table-search" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar licitaciones">
+                <input wire:keyup="getLicitaciones" wire:model="texto" type="text" id="table-search" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar licitaciones">
             </div>
         </div>
     </div>
@@ -48,6 +63,8 @@
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Cliente: {{$licitacion->cliente->nombre}}</p>
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Usuario: {{$licitacion->user->name}} {{$licitacion->user->apellido}}</p>
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Estado: {{$licitacion->estado->descripcion}}</p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Fecha inicio: {{$licitacion->fecha_inicio}}</p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Fecha fin: {{$licitacion->fecha_fin}}</p>
                 <a wire:click='abrirModalEditar({{$licitacion->id}})' href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Editar
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -115,6 +132,18 @@
                                 </select>
                                 <x-input-error :messages="$errors->get('id_estado')" class="mt-2" />
                             </div>
+
+                            <div class="mb-5">
+                                <label for="fecha_inicio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha inicio </label>
+                                <input wire:model="fecha_inicio" type="date" id="fecha_inicio" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="1234567" required />
+                                <x-input-error :messages="$errors->get('fecha_inicio')" class="mt-2" />
+                            </div>
+                            <div class="mb-5">
+                                <label for="fecha_fin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha fin </label>
+                                <input wire:model="fecha_fin" type="date" id="fecha_fin" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="1234567" required />
+                                <x-input-error :messages="$errors->get('fecha_fin')" class="mt-2" />
+                            </div>
+
                         </div>
 
                         <div class="mb-5">

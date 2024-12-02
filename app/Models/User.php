@@ -28,6 +28,7 @@ class User extends Authenticatable
         'id_rol',
         'id_estado',
         'email',
+        'fecha_nacimiento',
         'password',
     ];
 

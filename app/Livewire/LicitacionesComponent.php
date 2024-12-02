@@ -30,9 +30,12 @@ class LicitacionesComponent extends Component
     public string $nombre = '';
     public string $descripcion = '';
     public string $id_usuario = '';
+    public string $fecha_fin = '';
+    public string $fecha_inicio = '';
     public string $id_estado = '';
     public string $id_cliente = '';
     public string $id_tipo_archivo = '';
+    public string $usuario = '';
     public $archivo;
     public $archivosAgregados = [];
     public $isEdition = false;
@@ -52,7 +55,7 @@ class LicitacionesComponent extends Component
         $this->user = Auth::user();
         $this->getLicitaciones();
         $this->clientes = Cliente::orderBy('nombre')->get();
-        $this->users = User::get();
+        $this->users = User::orderBy('name')->orderBy('apellido')->get();
         $this->estados = Estado::get();
         $this->tiposArchivo = TipoArchivo::where('id', '!=', 1)->get();
     }
@@ -75,6 +78,8 @@ class LicitacionesComponent extends Component
         $this->editionLicitacion = Licitacion::find($idLicitacion);
         $this->nombre = $this->editionLicitacion->nombre;
         $this->descripcion = $this->editionLicitacion->descripcion;
+        $this->fecha_fin = $this->editionLicitacion->fecha_fin;
+        $this->fecha_inicio = $this->editionLicitacion->fecha_inicio;
         $this->id_usuario = $this->editionLicitacion->id_usuario;
         $this->id_estado = $this->editionLicitacion->id_estado;
         $this->id_cliente = $this->editionLicitacion->id_cliente;
@@ -93,6 +98,8 @@ class LicitacionesComponent extends Component
         $this->id_estado = '';
         $this->id_cliente = '';
         $this->archivo = '';
+        $this->fecha_inicio = '';
+        $this->fecha_fin = '';
         $this->id_tipo_archivo = '';
         $this->archivos = [];
         $this->archivosAgregados = [];
@@ -105,6 +112,7 @@ class LicitacionesComponent extends Component
             ->orWhereRelation('estado', 'descripcion', 'like', '%'.$this->texto.'%')
             ->orWhereRelation('user', 'name', 'like', '%'.$this->texto.'%')
             ->orWhereRelation('user', 'apellido', 'like', '%'.$this->texto.'%')
+            ->orWhereRelation('user', 'cedula', 'like', '%'.$this->texto.'%')
             ->orWhereRelation('cliente', 'nombre', 'like', '%'.$this->texto.'%')
             ->orderBy($this->orden)
             ->get();
@@ -114,6 +122,13 @@ class LicitacionesComponent extends Component
                 return $licitacion->id_usuario == $this->user->id;
             })->all();
         }
+
+        $this->licitaciones = collect($this->licitaciones)->filter(function($licitacion) {
+            if ($this->usuario == '') {
+                return true;
+            }
+            return $licitacion->id_usuario == $this->usuario;
+        })->all();
     }
 
     public function validateFields() {
@@ -133,6 +148,8 @@ class LicitacionesComponent extends Component
             'nombre' => ['required', 'string', 'max:255'],
             'descripcion' => ['required', 'string', 'max:255'],
             'id_cliente' => ['required'],
+            'fecha_inicio' => ['required', 'string'],
+            'fecha_fin' => ['required', 'string'],
             'id_estado' => ['required'],
         ]);
 
@@ -153,6 +170,8 @@ class LicitacionesComponent extends Component
             'nombre' => ['required', 'string', 'max:255'],
             'descripcion' => ['required', 'string', 'max:255'],
             'id_cliente' => ['required'],
+            'fecha_inicio' => ['required', 'string'],
+            'fecha_fin' => ['required', 'string'],
             'id_estado' => ['required'],
         ]);
 
@@ -162,6 +181,8 @@ class LicitacionesComponent extends Component
         $licitacion->descripcion = $validated['descripcion'];
         $licitacion->id_cliente = $validated['id_cliente'];
         $licitacion->id_estado = $validated['id_estado'];
+        $licitacion->fecha_inicio = $validated['fecha_inicio'];
+        $licitacion->fecha_fin = $validated['fecha_fin'];
 
 
         $licitacion->save();
